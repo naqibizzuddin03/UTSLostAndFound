@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UTSLostAndFound.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="loginPage"
+    Title="Login"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="TextColor">Black</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
+            <Image Source="company_logo.png" HeightRequest="150" WidthRequest="150" />
+
+            <StackLayout Spacing="5">
+                <Label Text="Welcome!" FontSize="28" TextColor="Gray" HorizontalTextAlignment="Center" />
+                <Label Text="Login to your account" FontSize="18" TextColor="Gray" HorizontalTextAlignment="Center" />
+            </StackLayout>
+
+            <StackLayout Margin="20">
+                <Entry Placeholder="Student ID" Text="{Binding StudentId}" Keyboard="Email" TextColor="{StaticResource TextColor}" />
+                <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True" TextColor="{StaticResource TextColor}" />
+
+                <Button Text="Login" Command="{Binding LoginCommand}" />
+
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Don't have an account? " TextColor="Gray" />
+                <Label Text="Register Now" TextColor="{StaticResource TextColor}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RegisterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalTextAlignment="Center" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

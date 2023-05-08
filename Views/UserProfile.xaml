@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UTSLostAndFound.Views.UserProfile"
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False"
+             x:Name="userProfilePage"
+             Title="UserProfile">
+    <StackLayout Margin="20">
+        <StackLayout Orientation="Horizontal" Margin="0, 30, 0, 15">
+            <Label FontAttributes="Bold"
+                       FontSize="20"
+                       HorizontalOptions="Start"
+                       Text="Student ID:"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+            <Label FontSize="20"
+                       HorizontalOptions="StartAndExpand"
+                       Text="{Binding StudentID}"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 15">
+            <Label FontAttributes="Bold"
+                       FontSize="20"
+                       HorizontalOptions="Start"
+                       Text="Password:"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+            <Label FontSize="20"
+                       HorizontalOptions="StartAndExpand"
+                       Text="{Binding Password}"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+        </StackLayout>
+        <Button Text="Edit Profile"
+                Command="{Binding Source={x:Reference profilePage}, Path=BindingContext.EditProfileCommand}" />
+    </StackLayout>
+</ContentPage>

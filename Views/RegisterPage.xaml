@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UTSLostAndFound.Views.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="registerPage"
+    Title="RegisterPage"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="1" VerticalOptions="CenterAndExpand">
+            <StackLayout Margin="32" Spacing="16" HorizontalOptions="CenterAndExpand">
+                <Label Text="Create an account!" FontSize="24" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+
+                <Entry
+                    x:Name="studentIdEntry"
+                    Margin="0,16,0,0"
+                    Placeholder="Student ID"
+                    HorizontalOptions="FillAndExpand"
+                    TextColor="Black" />
+
+                <Entry
+                    x:Name="passwordEntry"
+                    Margin="0,16,0,0"
+                    Placeholder="Password"
+                    IsPassword="True"
+                    HorizontalOptions="FillAndExpand" 
+                    TextColor="Black" />
+
+                <Button
+                    Text="Register"
+                    Margin="0,24"
+                    BackgroundColor="#00C569"
+                    TextColor="White"
+                    Command="{Binding RegisterCommand}" />
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Already have an account? " TextColor="Gray" />
+                    <Label Text="Login now" TextColor="Black">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RegisterCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+
+        <AbsoluteLayout Grid.Row="1">
+            <BoxView Color="#00C569" Opacity="0.4" WidthRequest="100" HeightRequest="100" AbsoluteLayout.LayoutBounds="0.95, 0.05, 100, 100" AbsoluteLayout.LayoutFlags="PositionProportional" />
+            <BoxView Color="#00C569" Opacity="0.2" WidthRequest="80" HeightRequest="80" AbsoluteLayout.LayoutBounds="0.1, 0.9, 80, 80" AbsoluteLayout.LayoutFlags="PositionProportional" />
+            <BoxView Color="#00C569" Opacity="0.3" WidthRequest="120" HeightRequest="120" AbsoluteLayout.LayoutBounds="0.85, 0.8, 120, 120" AbsoluteLayout.LayoutFlags="PositionProportional" />
+        </AbsoluteLayout>
+    </Grid>
+</ContentPage>
+
+
+
+

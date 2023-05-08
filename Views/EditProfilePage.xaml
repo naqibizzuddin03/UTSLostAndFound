@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UTSLostAndFound.Views.EditProfilePage"
+             BackgroundColor="White"
+             Title="Edit Profile">
+    <ContentPage.Content>
+        <Grid VerticalOptions="Center">
+            <StackLayout Margin="20">
+                <Label FontAttributes="Bold"
+                       FontSize="20"
+                       HorizontalOptions="Start"
+                       Text="Username:"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+                <Entry FontSize="20"
+                       HorizontalOptions="FillAndExpand"
+                       Placeholder="Enter Username:"
+                       Text="{Binding StudentID}"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+                <Label FontAttributes="Bold"
+                       FontSize="20"
+                       HorizontalOptions="Start"
+                       Text="Student ID:"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+                <Entry FontSize="20"
+                       HorizontalOptions="FillAndExpand"
+                       Placeholder="Enter Student ID"
+                       Text="{Binding StudentID}"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+                <Label FontAttributes="Bold"
+                       FontSize="20"
+                       HorizontalOptions="Start"
+                       Text="Password:"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+                <Entry FontSize="20"
+                       HorizontalOptions="FillAndExpand"
+                       Placeholder="Enter Password"
+                       Text="{Binding Password}"
+                       IsPassword="True"
+                       TextColor="Black"
+                       VerticalTextAlignment="Center" />
+                <Button Text="Save"
+                        Command="{Binding SaveCommand}"
+                        HorizontalOptions="Start"
+                        VerticalOptions="End"
+                        Margin="0, 20, 0, 0"
+                        BackgroundColor="Transparent"
+                        TextColor="LightGreen"
+                        FontAttributes="Bold" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

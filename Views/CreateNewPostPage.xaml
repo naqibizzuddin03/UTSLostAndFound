@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UTSLostAndFound.Views.CreateNewPostPage"
+             x:Name="createNewPostPage"
+             Shell.BackgroundColor="White"
+             Shell.ForegroundColor="Black"
+             Shell.TitleColor="Black"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White"
+             Title="Create New Post">
+
+    <StackLayout Margin="32" Spacing="16" HorizontalOptions="CenterAndExpand">
+        <Label Text="Create a new post!" FontSize="24" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+
+        <Entry x:Name="productNameEntry" Margin="0,16,0,0" Placeholder="Product Name" HorizontalOptions="FillAndExpand" TextColor="Black" />
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Category: " VerticalOptions="Center" TextColor="Black" />
+            <Picker x:Name="categoryPicker" Title="Select Category" HorizontalOptions="FillAndExpand" TextColor="Black">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Lost</x:String>
+                        <x:String>Found</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </StackLayout>
+
+        <Entry x:Name="lastSeen" Margin="0,16,0,0" Placeholder="Last Seen" HorizontalOptions="FillAndExpand" TextColor="Black" />
+        <Entry x:Name="dateEntry" Margin="0,16,0,0" Placeholder="Date" HorizontalOptions="FillAndExpand" TextColor="Black" />
+        <Entry x:Name="name" Margin="0,16,0,0" Placeholder="Name" HorizontalOptions="FillAndExpand" TextColor="Black" />
+        <Entry x:Name="contactNumber" Margin="0,16,0,0" Placeholder="Contact Number" HorizontalOptions="FillAndExpand" TextColor="Black" />
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Upload Image" Margin="0,16,0,0" BackgroundColor="#00C569" TextColor="White" HorizontalOptions="FillAndExpand" Command="{Binding UploadImageCommand}" />
+            <Button Text="Post!" Margin="16,16,0,0" BackgroundColor="#00C569" TextColor="White" Command="{Binding PostCommand}" />
+        </StackLayout>
+
+        <!-- Replace this with the actual image control that will display the uploaded image -->
+        <Image x:Name="uploadedImage" Aspect="AspectFit" HeightRequest="200" HorizontalOptions="Center" />
+    </StackLayout>
+
+</ContentPage>
