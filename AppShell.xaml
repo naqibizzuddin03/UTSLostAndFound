@@ -21,7 +21,7 @@
                 <FontImageSource FontFamily="icon"
                                  Glyph="&#xf6dd;"></FontImageSource>
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate local:PostPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:YourPostPage}" />
         </Tab>
         <Tab Title="New Post">
             <Tab.Icon>

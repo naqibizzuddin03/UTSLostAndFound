@@ -37,6 +37,7 @@
                         FontSize="12"
                         HorizontalOptions="FillAndExpand"
                         Placeholder="Search Here"
+                        Text="{Binding SearchText}"
                         TextColor="Black" />
                 </StackLayout>
             </Border>
@@ -57,7 +58,11 @@
                     HorizontalTextAlignment="Center"
                     Text="&#xf100;"
                     TextColor="White"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="CenterAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IconTapCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Border>
         </StackLayout>
 
@@ -207,7 +212,7 @@
                         VerticalOptions="Center" />
                 </StackLayout>
 
-                <CollectionView Margin="0,12" ItemsSource="{Binding LostItemDataList}">
+                <CollectionView Margin="0,12" ItemsSource="{Binding FoundItemDataList}">
 
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout ItemSpacing="12" Orientation="Horizontal" />

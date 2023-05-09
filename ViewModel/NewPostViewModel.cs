@@ -1,99 +1,175 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using UTSLostAndFound.Model;
 using UTSLostAndFound.Views;
 
 namespace UTSLostAndFound.ViewModel
 {
-    public class NewPostViewModel : INotifyPropertyChanged
+    public class NewPostViewModel : BaseViewModel
     {
-        private string _productName;
-        public string ProductName
+        private string _categoryEntry;
+        public string CategoryEntry
         {
-            get { return _productName; }
-            set { SetProperty(ref _productName, value); }
-        }
-
-        private string _category;
-        public string Category
-        {
-            get { return _category; }
+            get => _categoryEntry;
             set
             {
-                if (_category != value)
+                if (_categoryEntry != value)
                 {
-                    _category = value;
-                    // Call a method or update properties based on the selected category
-                    HandleCategorySelection();
-                    OnPropertyChanged();
+                    _categoryEntry = value;
+                    OnPropertyChanged(nameof(CategoryEntry));
                 }
             }
         }
 
-        private string _date;
-        public string Date
+        private Data _data;
+        public Data Data
         {
-            get { return _date; }
-            set { SetProperty(ref _date, value); }
+            get => _data;
+            set
+            {
+                if (_data != value)
+                {
+                    _data = value;
+                    OnPropertyChanged(nameof(Data));
+                }
+            }
         }
 
         private ImageSource _uploadedImage;
         public ImageSource UploadedImage
         {
-            get { return _uploadedImage; }
-            set { SetProperty(ref _uploadedImage, value); }
+            get => _uploadedImage;
+            set
+            {
+                if (_uploadedImage != value)
+                {
+                    _uploadedImage = value;
+                    OnPropertyChanged(nameof(UploadedImage));
+                }
+            }
         }
 
-        public ICommand UploadImageCommand { get; private set; }
-        public ICommand PostCommand { get; private set; }
+        public ICommand PostCommand { get; set; }
+        public ICommand UploadImageCommand { get; set; }
 
         public NewPostViewModel()
         {
-            UploadImageCommand = new Command(UploadImage);
+            Data = new Data();
             PostCommand = new Command(Post);
+            UploadImageCommand = new Command(async () => await UploadImage());
         }
 
-        private void UploadImage()
+        private async Task UploadImage()
         {
-            // Implement the logic to upload the image and set the UploadedImage property
+            try
+            {
+                var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
+                {
+                    Title = "Please pick a photo"
+                });
+
+                if (result != null)
+                {
+                    var stream = await result.OpenReadAsync();
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        await stream.CopyToAsync(ms);
+                        var bytes = ms.ToArray();
+                        var base64String = System.Convert.ToBase64String(bytes);
+                        Data.ImageUrl = base64String;
+                        UploadedImage = ImageSource.FromStream(() => new MemoryStream(bytes));
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                // Handle exception
+            }
         }
 
         private void Post()
         {
-            // Implement the logic to create and save the new post using the provided data
-            // For example, you can add the new post to a collection that is displayed in the ExplorePage and YourPostPage
-            Application.Current.MainPage = new PostPage();
-            Application.Current.MainPage = new AppShell();
-        }
-
-        private void HandleCategorySelection()
-        {
-            // Implement logic based on the selected category
-            if (Category == "Lost")
+            var newProduct = new ProductListModel
             {
-                // Additional logic for "Lost" category
-            }
-            else if (Category == "Found")
-            {
-                // Additional logic for "Found" category
-            }
-        }
+                Name = Data.ProductName,
+                LastSeen = Data.LastSeen + ":",
+                Date = Data.Date.ToString(),
+                ImageUrl = Data.ImageUrl
+            };
 
+            // Add the new product to the AllProductDataList in YourPostViewModel
+            YourPostViewModel vm = new YourPostViewModel();
+            vm.AllProductDataList.Add(newProduct);
+
+            AppShell appShell = new AppShell();
+            Application.Current.MainPage = new HomePage();
+            Application.Current.MainPage = appShell;
+        }
+    }
+
+    public class Data : INotifyPropertyChanged
+    {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private string _productName;
+        public string ProductName
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => _productName;
+            set
+            {
+                if (_productName != value)
+                {
+                    _productName = value;
+                    OnPropertyChanged(nameof(ProductName));
+                }
+            }
         }
 
-        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        private string _imageUrl;
+        public string ImageUrl
         {
-            if (Equals(storage, value))
-                return false;
+            get => _imageUrl;
+            set
+            {
+                if (_imageUrl != value)
+                {
+                    _imageUrl = value;
+                    OnPropertyChanged(nameof(ImageUrl));
+                }
+            }
+        }
 
-            storage = value;
-            OnPropertyChanged(propertyName);
-            return true;
+        private Nullable<DateTime> _date;
+        public Nullable<DateTime> Date
+        {
+            get => _date;
+            set
+            {
+                if (_date != value)
+                {
+                    _date = value;
+                    OnPropertyChanged(nameof(Date));
+                }
+            }
+        }
+
+        private string _lastSeen;
+        public string LastSeen
+        {
+            get => _lastSeen;
+            set
+            {
+                if (_lastSeen != value)
+                {
+                    _lastSeen = value;
+                    OnPropertyChanged(nameof(LastSeen));
+                }
+            }
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -105,7 +105,7 @@ namespace UTSLostAndFound.ViewModel
             List<ReviewModel> reviewData = new List<ReviewModel>();
             reviewData.Add(new ReviewModel() { Name = "Contact Nummber:", Review = "0135923903"});
 
-            ProductDetail.Reviews = reviewData;
+            ProductDetail.Contact = reviewData;
         }
     }
 }

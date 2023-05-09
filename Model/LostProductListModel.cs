@@ -7,6 +7,5 @@
         public string LastSeen { get; set; }
         public string Date { get; set; }
         public string Details { get; set; }
-        public double Qty { get; set; }
     }
 }

@@ -57,7 +57,7 @@
                         </Label>
                     </StackLayout>
 
-                    <CollectionView ItemsSource="{Binding ProductDetail.Reviews}"
+                    <CollectionView ItemsSource="{Binding ProductDetail.Contact}"
                                     Margin="0,16">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="12"

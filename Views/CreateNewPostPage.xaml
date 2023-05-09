@@ -13,11 +13,11 @@
     <StackLayout Margin="32" Spacing="16" HorizontalOptions="CenterAndExpand">
         <Label Text="Create a new post!" FontSize="24" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
 
-        <Entry x:Name="productNameEntry" Margin="0,16,0,0" Placeholder="Product Name" HorizontalOptions="FillAndExpand" TextColor="Black" />
+        <Entry Text="{Binding Data.ProductName}" Margin="0,16,0,0" Placeholder="Product Name" HorizontalOptions="FillAndExpand" TextColor="Black" />
 
         <StackLayout Orientation="Horizontal">
             <Label Text="Category: " VerticalOptions="Center" TextColor="Black" />
-            <Picker x:Name="categoryPicker" Title="Select Category" HorizontalOptions="FillAndExpand" TextColor="Black">
+            <Picker SelectedItem="{Binding Data.Category}" x:Name="categoryPicker" Title="Select Category" HorizontalOptions="FillAndExpand" TextColor="Black">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>Lost</x:String>
@@ -27,18 +27,18 @@
             </Picker>
         </StackLayout>
 
-        <Entry x:Name="lastSeen" Margin="0,16,0,0" Placeholder="Last Seen" HorizontalOptions="FillAndExpand" TextColor="Black" />
-        <Entry x:Name="dateEntry" Margin="0,16,0,0" Placeholder="Date" HorizontalOptions="FillAndExpand" TextColor="Black" />
-        <Entry x:Name="name" Margin="0,16,0,0" Placeholder="Name" HorizontalOptions="FillAndExpand" TextColor="Black" />
-        <Entry x:Name="contactNumber" Margin="0,16,0,0" Placeholder="Contact Number" HorizontalOptions="FillAndExpand" TextColor="Black" />
+        <Entry Text="{Binding Data.LastSeen}" x:Name="lastSeenEntry" Margin="0,16,0,0" Placeholder="Last Seen" HorizontalOptions="FillAndExpand" TextColor="Black" />
+        <Entry Text="{Binding Data.Date}" x:Name="dateEntry" Margin="0,16,0,0" Placeholder="Date" HorizontalOptions="FillAndExpand" TextColor="Black" />
+        <Entry Text="{Binding Data.Name}" x:Name="nameEntry" Margin="0,16,0,0" Placeholder="Name" HorizontalOptions="FillAndExpand" TextColor="Black" />
+        <Entry Text="{Binding Data.ContactNumber}" x:Name="contactNumberEntry" Margin="0,16,0,0" Placeholder="Contact Number" HorizontalOptions="FillAndExpand" TextColor="Black" />
 
         <StackLayout Orientation="Horizontal">
             <Button Text="Upload Image" Margin="0,16,0,0" BackgroundColor="#00C569" TextColor="White" HorizontalOptions="FillAndExpand" Command="{Binding UploadImageCommand}" />
             <Button Text="Post!" Margin="16,16,0,0" BackgroundColor="#00C569" TextColor="White" Command="{Binding PostCommand}" />
         </StackLayout>
 
-        <!-- Replace this with the actual image control that will display the uploaded image -->
-        <Image x:Name="uploadedImage" Aspect="AspectFit" HeightRequest="200" HorizontalOptions="Center" />
+        <Image Source="{Binding UploadedImage}" x:Name="uploadedImage" Aspect="AspectFit" HeightRequest="200" HorizontalOptions="Center" />
     </StackLayout>
 
 </ContentPage>
+

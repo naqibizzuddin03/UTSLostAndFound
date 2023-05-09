@@ -5,7 +5,7 @@
         public string ImageUrl { get; set; }
         public string Name { get; set; }
         public List<string> Sizes { get; set; }
-        public List<ReviewModel> Reviews { get; set; }
+        public List<ReviewModel> Contact { get; set; }
         public Color Colors { get; set; }
         public string Details { get; set; }
         public double Date { get; set; }

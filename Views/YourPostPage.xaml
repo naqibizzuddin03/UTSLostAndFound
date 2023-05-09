@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UTSLostAndFound.Views.YourPostPage"
+             x:Name="yourPostPage"
+             Shell.BackgroundColor="White"
+             Shell.ForegroundColor="Black"
+             Shell.TitleColor="Black"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White"
+             Title="YourPostPage">
+    <CollectionView ItemsSource="{Binding AllProductDataList}"
+                    Margin="0,12">
+        
+        <CollectionView.ItemsLayout>
+            <GridItemsLayout 
+                Orientation="Vertical"
+                Span="1"
+                VerticalItemSpacing="12" />
+        </CollectionView.ItemsLayout>
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <SwipeView>
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItem BackgroundColor="#FF3D00"
+                                       Command="{Binding Source={x:Reference yourPostPage}, Path=BindingContext.DeleteCommand}"
+                                       CommandParameter="{Binding .}"
+                                       Text="Delete" />
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+
+                    <StackLayout Orientation="Horizontal"
+                                 Spacing="16"
+                                 Padding="12">
+
+                        <Image Aspect="AspectFit"
+                               HeightRequest="120"
+                               Source="{Binding ImageUrl}"
+                               WidthRequest="120" />
+
+                        <StackLayout Spacing="6">
+                            <Label FontSize="16"
+                                   HorizontalOptions="StartAndExpand"
+                                   Text="{Binding Name}"
+                                   TextColor="Black">
+                            </Label>
+
+                            <Label FontSize="16"
+                                   HorizontalOptions="StartAndExpand"
+                                   Text="{Binding LastSeen}"
+                                   TextColor="#00C569">
+                            </Label>
+
+                            <Label FontSize="16"
+                                   HorizontalOptions="StartAndExpand"
+                                   Text="{Binding Date}"
+                                   TextColor="#00C569">
+                            </Label>
+
+                            <Button Text="View"
+                                    FontSize="16"
+                                    BackgroundColor="#00C569"
+                                    TextColor="White"
+                                    HorizontalOptions="StartAndExpand"
+                                    Command="{Binding Source={x:Reference yourPostPage}, Path=BindingContext.TapCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </SwipeView>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>
+
