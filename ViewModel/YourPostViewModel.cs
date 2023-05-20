@@ -10,19 +10,7 @@ namespace UTSLostAndFound.ViewModel
         public ICommand TapCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
 
-        public ObservableCollection<ProductListModel> _AllProductDataList = new ObservableCollection<ProductListModel>();
-        public ObservableCollection<ProductListModel> AllProductDataList
-        {
-            get
-            {
-                return _AllProductDataList;
-            }
-            set
-            {
-                _AllProductDataList = value;
-                OnPropertyChanged("AllProductDataList");
-            }
-        }
+        public ObservableCollection<ProductListModel> AllProductDataList { get; } = new ObservableCollection<ProductListModel>();
 
         public YourPostViewModel()
         {
@@ -32,18 +20,22 @@ namespace UTSLostAndFound.ViewModel
 
         void PopulateData()
         {
-            AllProductDataList.Clear();
-            AllProductDataList.Add(new ProductListModel() { Name = "Speekah", LastSeen = "Last seen:", Date = "01/03/2023", ImageUrl = "https://raw.githubusercontent.com/exendahal/ecommerceXF/master/eCommerce/eCommerce.Android/Resources/drawable/Image1.png" });
-            AllProductDataList.Add(new ProductListModel() { Name = "Leather Wristwatch", LastSeen = "Last seen:", Date = "26/04/2023", ImageUrl = "https://raw.githubusercontent.com/exendahal/ecommerceXF/master/eCommerce/eCommerce.Android/Resources/drawable/Image2.png" });
-            AllProductDataList.Add(new ProductListModel() { Name = "ASMR device", LastSeen = "Last seen:", Date = "18/04/2023", ImageUrl = "https://raw.githubusercontent.com/exendahal/ecommerceXF/master/eCommerce/eCommerce.Android/Resources/drawable/Image3.png" });
-            AllProductDataList.Add(new ProductListModel() { Name = "Overpriced earbuds", LastSeen = "Last seen:", Date = "04/05/2023", ImageUrl = "https://raw.githubusercontent.com/exendahal/ecommerceXF/master/eCommerce/eCommerce.Android/Resources/drawable/Image4.png" });
+            foreach (var lostItem in ItemData.LostItemDataList)
+            {
+                AllProductDataList.Add(lostItem);
+            }
+
+            foreach (var foundItem in ItemData.FoundItemDataList)
+            {
+                AllProductDataList.Add(foundItem);
+            }
         }
 
         private void CommandInit()
         {
             TapCommand = new Command<ProductListModel>(items =>
             {
-                Application.Current.MainPage.Navigation.PushModalAsync(new ProductDetails());
+                Application.Current.MainPage.Navigation.PushModalAsync(new ProductDetails(items));
             });
 
             DeleteCommand = new Command<ProductListModel>(item =>
@@ -51,6 +43,16 @@ namespace UTSLostAndFound.ViewModel
                 if (item != null)
                 {
                     AllProductDataList.Remove(item);
+
+                    // Remove the item from the ItemData model
+                    if (ItemData.LostItemDataList.Contains(item))
+                    {
+                        ItemData.LostItemDataList.Remove(item);
+                    }
+                    else if (ItemData.FoundItemDataList.Contains(item))
+                    {
+                        ItemData.FoundItemDataList.Remove(item);
+                    }
                 }
             });
         }

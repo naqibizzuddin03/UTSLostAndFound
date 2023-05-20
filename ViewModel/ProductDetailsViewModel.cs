@@ -5,107 +5,74 @@ namespace UTSLostAndFound.ViewModel
 {
     public class ProductDetailsViewModel : BaseViewModel
     {
-        double lastScrollIndex;
-        double currentScrollIndex;
         public ICommand TapBackCommand { get; set; }
-        public ICommand TapFavCommand { get; set; }
+        public ICommand CopyNumberCommand { get; set; }
+        public ContactModel SelectedContact { get; set; }
 
-        public bool _IsFooterVisible = false;
-        public bool IsFooterVisible
-        {
-            get
-            {
-                return _IsFooterVisible;
-            }
-            set
-            {
-                _IsFooterVisible = value;
-                OnPropertyChanged("IsFooterVisible");
+        public bool IsFooterVisible { get; set; } = true;
 
-            }
-        }
-
-        public bool _IsFavorite = false;
-        public bool IsFavorite
-        {
-            get
-            {
-                return _IsFavorite;
-            }
-            set
-            {
-                _IsFavorite = value;
-                OnPropertyChanged("IsFavorite");
-                OnPropertyChanged("FavStatusColor");
-            }
-        }
-        public Color FavStatusColor
-        {
-            get
-            {
-                if (IsFavorite)
-                {
-                    return Color.FromArgb("#00C569");
-                }
-                return Color.FromArgb("#000000");
-            }
-        }
-
-        public ProductDetail _ProductDetail = new ProductDetail();
+        private ProductDetail _productDetail = new ProductDetail();
         public ProductDetail ProductDetail
         {
-            get
-            {
-                return _ProductDetail;
-            }
+            get => _productDetail;
             set
             {
-                _ProductDetail = value;
-                OnPropertyChanged("ProductDetail");
+                _productDetail = value;
+                OnPropertyChanged(nameof(ProductDetail));
             }
         }
 
-        public ProductDetailsViewModel()
+        private ContactModel _selectedItem;
+        public ContactModel SelectedItem
         {
-            PopulateData();
-            TapBackCommand = new Command<object>(GoBack);
-            TapFavCommand = new Command<Color>(FavItem);
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            }
         }
 
-        private async void GoBack(object obj)
+        public ProductDetailsViewModel(ProductListModel selectedItem)
+        {
+            PopulateData(selectedItem);
+            TapBackCommand = new Command(GoBack);
+            CopyNumberCommand = new Command<ContactModel>(CopyNumber);
+            SelectedContact = ProductDetail.Contact[0];
+        }
+
+        private async void GoBack()
         {
             await Application.Current.MainPage.Navigation.PopModalAsync();
         }
 
-        private void FavItem(Color obj)
+        private async void CopyNumber(ContactModel contact)
         {
-            IsFavorite = true ? !IsFavorite : IsFavorite;
-        }
-        public void ChageFooterVisibility(double currentY)
-        {
-            currentScrollIndex = currentY;
-            if (currentScrollIndex > lastScrollIndex)
+            if (contact != null)
             {
-                IsFooterVisible = false;
+                await Clipboard.SetTextAsync(contact.Number);
+                await Application.Current.MainPage.DisplayAlert("Success", "The number has been copied to your clipboard", "OK");
             }
             else
             {
-                IsFooterVisible = true;
+                await Application.Current.MainPage.DisplayAlert("Error", "No contact selected", "OK");
             }
-            lastScrollIndex = currentScrollIndex;
         }
-        void PopulateData()
-        {
-            ProductDetail.Date = 1500;
-            ProductDetail.Name = "Johnny Brovado";
-            ProductDetail.ImageUrl = "https://raw.githubusercontent.com/exendahal/ecommerceXF/master/eCommerce/eCommerce.Android/Resources/drawable/Image10.png";
-            ProductDetail.Colors = Color.FromArgb("#33427D");
-            ProductDetail.Details = "blueshirt and a handsome face, please help me find him";
 
-            List<ReviewModel> reviewData = new List<ReviewModel>();
-            reviewData.Add(new ReviewModel() { Name = "Contact Nummber:", Review = "0135923903"});
+        private void PopulateData(ProductListModel selectedItem)
+        {
+            ProductDetail.ContactNow = "Contact Now!";
+            ProductDetail.Name = selectedItem.Name;
+            ProductDetail.Image = selectedItem.Image;
+            ProductDetail.Colors = Color.FromArgb("#33427D");
+            ProductDetail.Details = selectedItem.Details;
+
+            List<ContactModel> reviewData = new List<ContactModel>();
+            reviewData.Add(new ContactModel { ContactNumber = "Contact Number:", Number = selectedItem.ContactNumber });
 
             ProductDetail.Contact = reviewData;
         }
     }
 }
+
+

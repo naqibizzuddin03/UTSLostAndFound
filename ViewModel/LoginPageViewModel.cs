@@ -1,7 +1,6 @@
-﻿
-
-using UTSLostAndFound.Views;
+﻿using UTSLostAndFound.Views;
 using System.Windows.Input;
+using UTSLostAndFound.Model;
 
 namespace UTSLostAndFound.ViewModel
 {
@@ -41,26 +40,21 @@ namespace UTSLostAndFound.ViewModel
 
         private void Login()
         {
-            // Add your login logic here
-            // Example: Validate the student ID and password
-            if (StudentId == "admin" && Password == "admin")
+            RegisteredAccount account = RegisteredAccount.GetRegisteredAccount(StudentId);
+
+            if (account != null && account.Password == Password)
             {
-                // Successful login
                 Application.Current.MainPage = new AppShell();
             }
             else
             {
-                // Invalid login credentials, show an error message
                 Application.Current.MainPage.DisplayAlert("Error", "Invalid student ID or password.", "OK");
             }
         }
 
-
         private void Register()
         {
-            // Add your registration logic here
             Application.Current.MainPage = new RegisterPage();
         }
     }
 }
-

@@ -1,13 +1,16 @@
+using System.Collections.ObjectModel;
 using UTSLostAndFound.Model;
 using UTSLostAndFound.ViewModel;
 
-namespace UTSLostAndFound.Views;
-
-public partial class CategoryDetail : ContentPage
+namespace UTSLostAndFound.Views
 {
-    public CategoryDetail(CategoriesModel data)
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class CategoryDetail : ContentPage
     {
-        InitializeComponent();
-        BindingContext = new CategoryDetailViewModel(data);
+        public CategoryDetail(ObservableCollection<ProductListModel> categoryProductDataList)
+        {
+            InitializeComponent();
+            BindingContext = new CategoryDetailViewModel(categoryProductDataList);
+        }
     }
 }

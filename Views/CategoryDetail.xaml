@@ -95,7 +95,7 @@
                                             <Image Aspect="AspectFit"
                                                    HeightRequest="40"
                                                    HorizontalOptions="CenterAndExpand"
-                                                   Source="{Binding ImageUrl}"
+                                                   Source="{Binding Image}"
                                                    VerticalOptions="CenterAndExpand"
                                                    WidthRequest="40" />
                                         </Frame>
@@ -148,7 +148,7 @@
                                         StrokeThickness="1">
                                     <Image Aspect="AspectFit"
                                            HeightRequest="240"
-                                           Source="{Binding ImageUrl}"
+                                           Source="{Binding Image}"
                                            WidthRequest="165" />
                                 </Border>
 

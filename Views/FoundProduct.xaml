@@ -26,9 +26,9 @@
                     <Border StrokeShape="RoundRectangle 6,0,0,6"
                             Background="transparent"
                             StrokeThickness="1">
-                        <Image Aspect="AspectFit"
+                        <Image Aspect="AspectFill"
                                HeightRequest="240"
-                               Source="{Binding ImageUrl}"
+                               Source="{Binding Image}"
                                WidthRequest="165" />
                     </Border>
 

@@ -10,35 +10,34 @@
              BackgroundColor="White"
              Title="Create New Post">
 
-    <StackLayout Margin="32" Spacing="16" HorizontalOptions="CenterAndExpand">
-        <Label Text="Create a new post!" FontSize="24" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+    <ScrollView HorizontalOptions="FillAndExpand">
+        <StackLayout Margin="16" Spacing="16">
+            <Label Text="Create a new post!" FontSize="24" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
 
-        <Entry Text="{Binding Data.ProductName}" Margin="0,16,0,0" Placeholder="Product Name" HorizontalOptions="FillAndExpand" TextColor="Black" />
+            <Entry Text="{Binding Data.ProductName}" Margin="0,16,0,0" Placeholder="Product Name" TextColor="Black" />
 
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Category: " VerticalOptions="Center" TextColor="Black" />
-            <Picker SelectedItem="{Binding Data.Category}" x:Name="categoryPicker" Title="Select Category" HorizontalOptions="FillAndExpand" TextColor="Black">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Lost</x:String>
-                        <x:String>Found</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Category: " VerticalOptions="Center" TextColor="Black" />
+                <Picker SelectedItem="{Binding CategoryEntry}" x:Name="categoryPicker" Title="Select Category" TextColor="Black">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Lost</x:String>
+                            <x:String>Found</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+
+            <Entry Text="{Binding Data.Date}" x:Name="dateEntry" Margin="0,16,0,0" Placeholder="Date e.g. XX/XX/20XX" TextColor="Black" />
+            <Entry Text="{Binding Data.Details}" x:Name="nameEntry" Margin="0,16,0,0" Placeholder="Details" TextColor="Black" />
+            <Entry Text="{Binding Data.ContactNumber}" x:Name="contactNumberEntry" Margin="0,16,0,0" Placeholder="Contact Number" TextColor="Black" />
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Upload Image" Margin="0,16,0,0" BackgroundColor="#00C569" TextColor="White" Command="{Binding UploadImageCommand}" />
+                <Button Text="Post!" Margin="16,16,0,0" BackgroundColor="#00C569" TextColor="White" Command="{Binding PostCommand}" />
+            </StackLayout>
+
+            <Image Source="{Binding UploadedImage}" x:Name="uploadedImage" Aspect="AspectFit" HeightRequest="200" HorizontalOptions="Center" />
         </StackLayout>
-
-        <Entry Text="{Binding Data.LastSeen}" x:Name="lastSeenEntry" Margin="0,16,0,0" Placeholder="Last Seen" HorizontalOptions="FillAndExpand" TextColor="Black" />
-        <Entry Text="{Binding Data.Date}" x:Name="dateEntry" Margin="0,16,0,0" Placeholder="Date" HorizontalOptions="FillAndExpand" TextColor="Black" />
-        <Entry Text="{Binding Data.Name}" x:Name="nameEntry" Margin="0,16,0,0" Placeholder="Name" HorizontalOptions="FillAndExpand" TextColor="Black" />
-        <Entry Text="{Binding Data.ContactNumber}" x:Name="contactNumberEntry" Margin="0,16,0,0" Placeholder="Contact Number" HorizontalOptions="FillAndExpand" TextColor="Black" />
-
-        <StackLayout Orientation="Horizontal">
-            <Button Text="Upload Image" Margin="0,16,0,0" BackgroundColor="#00C569" TextColor="White" HorizontalOptions="FillAndExpand" Command="{Binding UploadImageCommand}" />
-            <Button Text="Post!" Margin="16,16,0,0" BackgroundColor="#00C569" TextColor="White" Command="{Binding PostCommand}" />
-        </StackLayout>
-
-        <Image Source="{Binding UploadedImage}" x:Name="uploadedImage" Aspect="AspectFit" HeightRequest="200" HorizontalOptions="Center" />
-    </StackLayout>
-
+    </ScrollView>
 </ContentPage>
-

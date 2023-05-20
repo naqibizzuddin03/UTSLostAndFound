@@ -25,6 +25,14 @@ namespace UTSLostAndFound.ViewModel
             // Perform save profile logic here
             // For example, update the profile information in the database
 
+            // Update the login credentials in the RegisteredAccount model
+            RegisteredAccount registeredAccount = RegisteredAccount.GetRegisteredAccount(StudentID);
+            if (registeredAccount != null)
+            {
+                registeredAccount.Username = StudentID;
+                registeredAccount.Password = Password;
+            }
+
             // After saving, navigate back to the profile page
             Application.Current.MainPage.Navigation.PopModalAsync();
         }

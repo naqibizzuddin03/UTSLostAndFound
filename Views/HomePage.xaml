@@ -3,10 +3,16 @@
     x:Class="UTSLostAndFound.Views.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:UTSLostAndFound.Converter"
     x:Name="homePage"
     Title="HomePage"
     BackgroundColor="White"
     Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BytesToImageConverter x:Key="BytesToImageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout Margin="8,12" Spacing="0">
         <StackLayout
             Margin="0"
@@ -144,6 +150,16 @@
                         VerticalOptions="Center" />
                 </StackLayout>
 
+                <!-- description for Lost Items section -->
+                <Label
+                    Margin="0,2,0,12"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    HorizontalTextAlignment="Start"
+                    Text="--Found someting? Then search for the rightful owner here!--"
+                    TextColor="#929292"
+                    VerticalOptions="Center" />
+
                 <CollectionView Margin="0,12" ItemsSource="{Binding LostItemDataList}">
 
                     <CollectionView.ItemsLayout>
@@ -162,9 +178,9 @@
                                     StrokeShape="RoundRectangle 6,0,0,6"
                                     StrokeThickness="1">
                                     <Image
-                                        Aspect="AspectFit"
+                                        Aspect="AspectFill"
                                         HeightRequest="240"
-                                        Source="{Binding ImageUrl}"
+                                        Source="{Binding ImageSource}"
                                         WidthRequest="165" />
                                 </Border>
 
@@ -212,6 +228,16 @@
                         VerticalOptions="Center" />
                 </StackLayout>
 
+                <!-- description for Found Items section -->
+                <Label
+                    Margin="0,2,0,12"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    HorizontalTextAlignment="Start"
+                    Text="--Searching for lost things? browse here to see if the other students have found it!--"
+                    TextColor="#929292"
+                    VerticalOptions="Center" />
+
                 <CollectionView Margin="0,12" ItemsSource="{Binding FoundItemDataList}">
 
                     <CollectionView.ItemsLayout>
@@ -230,9 +256,9 @@
                                     StrokeShape="RoundRectangle 6,0,0,6"
                                     StrokeThickness="1">
                                     <Image
-                                        Aspect="AspectFit"
+                                        Aspect="AspectFill"
                                         HeightRequest="240"
-                                        Source="{Binding ImageUrl}"
+                                        Source="{Binding ImageSource}"
                                         WidthRequest="165" />
                                 </Border>
 
@@ -269,3 +295,4 @@
         </ScrollView>
     </StackLayout>
 </ContentPage>
+

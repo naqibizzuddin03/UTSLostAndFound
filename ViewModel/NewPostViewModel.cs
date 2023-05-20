@@ -76,7 +76,8 @@ namespace UTSLostAndFound.ViewModel
                         await stream.CopyToAsync(ms);
                         var bytes = ms.ToArray();
                         var base64String = System.Convert.ToBase64String(bytes);
-                        Data.ImageUrl = base64String;
+                        Data.Image = base64String;
+                        Data.ImageData = bytes;
                         UploadedImage = ImageSource.FromStream(() => new MemoryStream(bytes));
                     }
                 }
@@ -89,20 +90,40 @@ namespace UTSLostAndFound.ViewModel
 
         private void Post()
         {
+            // Check if any required field is empty
+            if (string.IsNullOrEmpty(Data.ProductName) || string.IsNullOrEmpty(Data.Date))
+            {
+                // Display error message
+                Application.Current.MainPage.DisplayAlert("Error", "Thou shall not pass! Please fill all the fields before posting.", "OK");
+                return;
+            }
+
             var newProduct = new ProductListModel
             {
                 Name = Data.ProductName,
-                LastSeen = Data.LastSeen + ":",
-                Date = Data.Date.ToString(),
-                ImageUrl = Data.ImageUrl
+                LastSeen = "Last seen:",
+                Date = Data.Date,
+                Image = Data.Image,
+                ImageData = Data.ImageData,
+                Details = Data.Details,
+                ContactNumber = Data.ContactNumber
             };
 
-            // Add the new product to the AllProductDataList in YourPostViewModel
-            YourPostViewModel vm = new YourPostViewModel();
-            vm.AllProductDataList.Add(newProduct);
+            if (CategoryEntry == "Lost")
+            {
+                ItemData.LostItemDataList.Add(newProduct);
+            }
+            else if (CategoryEntry == "Found")
+            {
+                ItemData.FoundItemDataList.Add(newProduct);
+            }
 
-            AppShell appShell = new AppShell();
-            Application.Current.MainPage = new HomePage();
+            // Navigate to the homepage within the AppShell
+            var appShell = new AppShell();
+            var navigation = appShell.CurrentItem.Navigation;
+            navigation.PopToRootAsync(); // Clear the navigation stack
+            navigation.PushAsync(new HomePage()); // Navigate to the homepage
+
             Application.Current.MainPage = appShell;
         }
     }
@@ -125,22 +146,36 @@ namespace UTSLostAndFound.ViewModel
             }
         }
 
-        private string _imageUrl;
-        public string ImageUrl
+        private string _image;
+        public string Image
         {
-            get => _imageUrl;
+            get => _image;
             set
             {
-                if (_imageUrl != value)
+                if (_image != value)
                 {
-                    _imageUrl = value;
-                    OnPropertyChanged(nameof(ImageUrl));
+                    _image = value;
+                    OnPropertyChanged(nameof(Image));
                 }
             }
         }
 
-        private Nullable<DateTime> _date;
-        public Nullable<DateTime> Date
+        private byte[] _imageData;
+        public byte[] ImageData
+        {
+            get => _imageData;
+            set
+            {
+                if (_imageData != value)
+                {
+                    _imageData = value;
+                    OnPropertyChanged(nameof(ImageData));
+                }
+            }
+        }
+
+        private string _date;
+        public string Date
         {
             get => _date;
             set
@@ -153,16 +188,30 @@ namespace UTSLostAndFound.ViewModel
             }
         }
 
-        private string _lastSeen;
-        public string LastSeen
+        private string _details;
+        public string Details
         {
-            get => _lastSeen;
+            get => _details;
             set
             {
-                if (_lastSeen != value)
+                if (_details != value)
                 {
-                    _lastSeen = value;
-                    OnPropertyChanged(nameof(LastSeen));
+                    _details = value;
+                    OnPropertyChanged(nameof(Details));
+                }
+            }
+        }
+
+        private string _contactNumber;
+        public string ContactNumber
+        {
+            get => _contactNumber;
+            set
+            {
+                if (_contactNumber != value)
+                {
+                    _contactNumber = value;
+                    OnPropertyChanged(nameof(ContactNumber));
                 }
             }
         }

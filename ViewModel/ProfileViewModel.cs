@@ -1,6 +1,6 @@
-﻿using UTSLostAndFound.Model;
-using UTSLostAndFound.Views;
+﻿using UTSLostAndFound.Views;
 using System.Windows.Input;
+using UTSLostAndFound.Model;
 
 namespace UTSLostAndFound.ViewModel
 {
@@ -9,12 +9,21 @@ namespace UTSLostAndFound.ViewModel
         public ICommand TapCommand { get; private set; }
         public ICommand SignOutCommand { get; private set; }
 
-        public string Name { get; set; } = "Rick Astley";
-        public string Email { get; set; } = "1234567890";
-        public string ImageUrl { get; set; } = "https://raw.githubusercontent.com/exendahal/ecommerceXF/master/eCommerce/eCommerce.Android/Resources/drawable/Avatar.png";
+        public string Image { get; set; } = "avatar1";
 
-        public List<MenuItems> _MenuItems = new List<MenuItems>();
-        public List<MenuItems> MenuItems
+        private RegisteredAccount _currentUser;
+        public RegisteredAccount CurrentUser
+        {
+            get { return _currentUser; }
+            set
+            {
+                _currentUser = value;
+                OnPropertyChanged(nameof(CurrentUser));
+            }
+        }
+
+        public List<ProfileModel> _MenuItems = new List<ProfileModel>();
+        public List<ProfileModel> ProfileModel
         {
             get { return _MenuItems; }
             set { _MenuItems = value; }
@@ -22,6 +31,7 @@ namespace UTSLostAndFound.ViewModel
 
         public ProfileViewModel()
         {
+            CurrentUser = RegisteredAccount.GetRegisteredAccount("admin"); // Replace "admin" with the currently logged-in student ID
             PopulateData();
             CommandInit();
             SignOutCommand = new Command(SignOut);
@@ -29,15 +39,14 @@ namespace UTSLostAndFound.ViewModel
 
         void PopulateData()
         {
-            MenuItems.Clear();
-            MenuItems.Add(new Model.MenuItems() { Title = "Edit Profile", Body = "\uf3eb", TargetType = typeof(EditProfilePage) });
-            MenuItems.Add(new Model.MenuItems() { Title = "About Us", Body = "\uf34e", TargetType = typeof(AboutUsPage) });
-            MenuItems.Add(new Model.MenuItems() { Title = "Notifications", Body = "\uf09c", TargetType = typeof(Notification) });
+            ProfileModel.Clear();
+            ProfileModel.Add(new Model.ProfileModel() { Title = "Edit Profile", Body = "\uf3eb", TargetType = typeof(EditProfilePage) });
+            ProfileModel.Add(new Model.ProfileModel() { Title = "About Us", Body = "\uf34e", TargetType = typeof(AboutUsPage) });
         }
 
         private void CommandInit()
         {
-            TapCommand = new Command<MenuItems>(item =>
+            TapCommand = new Command<ProfileModel>(item =>
             {
                 Application.Current.MainPage.Navigation.PushModalAsync(((Page)Activator.CreateInstance(item.TargetType)));
             });

@@ -19,11 +19,20 @@
                 <Label Text="Create an account!" FontSize="24" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
 
                 <Entry
+                    x:Name="usernameEntry"
+                    Margin="0,16,0,0"
+                    Placeholder="Username"
+                    HorizontalOptions="FillAndExpand"
+                    TextColor="Black"
+                    Text="{Binding Username}" />
+
+                <Entry
                     x:Name="studentIdEntry"
                     Margin="0,16,0,0"
                     Placeholder="Student ID"
                     HorizontalOptions="FillAndExpand"
-                    TextColor="Black" />
+                    TextColor="Black"
+                    Text="{Binding StudentId}" />
 
                 <Entry
                     x:Name="passwordEntry"
@@ -31,7 +40,8 @@
                     Placeholder="Password"
                     IsPassword="True"
                     HorizontalOptions="FillAndExpand" 
-                    TextColor="Black" />
+                    TextColor="Black"
+                    Text="{Binding Password}" />
 
                 <Button
                     Text="Register"
@@ -58,6 +68,7 @@
         </AbsoluteLayout>
     </Grid>
 </ContentPage>
+
 
 
 

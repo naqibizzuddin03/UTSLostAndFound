@@ -37,7 +37,7 @@
 
                         <Image Aspect="AspectFit"
                                HeightRequest="120"
-                               Source="{Binding ImageUrl}"
+                               Source="{Binding Image}"
                                WidthRequest="120" />
 
                         <StackLayout Spacing="6">

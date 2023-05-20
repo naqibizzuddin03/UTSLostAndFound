@@ -14,7 +14,7 @@
                     StrokeThickness="0">
                 <Image Aspect="AspectFit"
                        HeightRequest="120"
-                       Source="{Binding ImageUrl}"
+                       Source="{Binding Image}"
                        WidthRequest="120" />
             </Border>
 
@@ -23,17 +23,17 @@
                 <Label FontAttributes="Bold"
                        FontSize="26"
                        HorizontalOptions="CenterAndExpand"
-                       Text="Rick Astley"
+                       Text="{Binding CurrentUser.Username}"
                        TextColor="Black"
                        VerticalTextAlignment="Center" />
                 <Label FontSize="14"
                        HorizontalOptions="CenterAndExpand"
-                       Text="1234567890"
+                       Text="{Binding CurrentUser.StudentId}"
                        TextColor="Black"
                        VerticalTextAlignment="Center" />
             </StackLayout>
         </StackLayout>
-        <CollectionView ItemsSource="{Binding MenuItems}"
+        <CollectionView ItemsSource="{Binding ProfileModel}"
                         Margin="12">
 
             <CollectionView.ItemsLayout>
@@ -111,5 +111,5 @@
                 FontAttributes="Bold" />
 
     </StackLayout>
-   
+
 </ContentPage>

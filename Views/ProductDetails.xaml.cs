@@ -1,18 +1,15 @@
+using UTSLostAndFound.Model;
 using UTSLostAndFound.ViewModel;
 
-namespace UTSLostAndFound.Views;
-
-public partial class ProductDetails : ContentPage
+namespace UTSLostAndFound.Views
 {
-    ProductDetailsViewModel viewModel;
-    public ProductDetails()
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ProductDetails : ContentPage
     {
-        InitializeComponent();
-        BindingContext = viewModel = new ProductDetailsViewModel();
-    }
-
-    private void ScrollView_Scrolled(object sender, ScrolledEventArgs e)
-    {
-        viewModel.ChageFooterVisibility(e.ScrollY);
+        public ProductDetails(ProductListModel selectedItem)
+        {
+            InitializeComponent();
+            BindingContext = new ProductDetailsViewModel(selectedItem);
+        }
     }
 }
