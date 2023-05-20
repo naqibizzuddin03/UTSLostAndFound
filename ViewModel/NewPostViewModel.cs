@@ -5,6 +5,7 @@ using UTSLostAndFound.Views;
 
 namespace UTSLostAndFound.ViewModel
 {
+    //Exception handling is implemented in this ViewModel (can refer to line 86)
     public class NewPostViewModel : BaseViewModel
     {
         private string _categoryEntry;
@@ -82,9 +83,20 @@ namespace UTSLostAndFound.ViewModel
                     }
                 }
             }
+            catch (UnauthorizedAccessException)
+            {
+                // Handle unauthorized access exception
+                Console.WriteLine("Access to media is unauthorized.");
+            }
+            catch (NotSupportedException)
+            {
+                // Handle not supported exception
+                Console.WriteLine("Picking photos is not supported on this platform.");
+            }
             catch (System.Exception ex)
             {
-                // Handle exception
+                // Handle other exceptions
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
 
@@ -121,8 +133,8 @@ namespace UTSLostAndFound.ViewModel
             // Navigate to the homepage within the AppShell
             var appShell = new AppShell();
             var navigation = appShell.CurrentItem.Navigation;
-            navigation.PopToRootAsync(); // Clear the navigation stack
-            navigation.PushAsync(new HomePage()); // Navigate to the homepage
+            navigation.PopToRootAsync();
+            navigation.PushAsync(new HomePage());
 
             Application.Current.MainPage = appShell;
         }

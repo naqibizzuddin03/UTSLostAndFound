@@ -5,32 +5,12 @@ using System.Windows.Input;
 
 namespace UTSLostAndFound.ViewModel
 {
-    public class HomePageViewModel : BaseViewModel
+    //principle for inheritance is implemented in this viewmodel
+    public class BaseHomePageViewModel : BaseViewModel
     {
-        public ICommand TapCommand { get; private set; }
-        public ICommand CategoryTapCommand { get; private set; }
-        public ICommand IconTapCommand { get; private set; }
-
-        private string _searchText;
-        private ObservableCollection<ProductListModel> _OriginalLostItemDataList;
-        private ObservableCollection<ProductListModel> _OriginalFoundItemDataList;
-
-        public string SearchText
-        {
-            get => _searchText;
-            set
-            {
-                _searchText = value;
-                OnPropertyChanged(nameof(SearchText));
-                SearchLostAndFoundItems(_searchText);
-            }
-        }
-
-        public ObservableCollection<CategoriesModel> CategoriesDataList { get; } = new ObservableCollection<CategoriesModel>()
-        {
-            new CategoriesModel() { CategoryID = 1, CategoryName = "Lost", Icon = "\ufb36" },
-            new CategoriesModel() { CategoryID = 2, CategoryName = "Found", Icon = "\ufac0" }
-        };
+        protected string _searchText;
+        protected ObservableCollection<ProductListModel> _OriginalLostItemDataList;
+        protected ObservableCollection<ProductListModel> _OriginalFoundItemDataList;
 
         public ObservableCollection<ProductListModel> LostItemDataList
         {
@@ -42,25 +22,14 @@ namespace UTSLostAndFound.ViewModel
             get => ItemData.FoundItemDataList;
         }
 
-        public HomePageViewModel()
-        {
-            PopulateData();
-            TapCommand = new Command<ProductListModel>(async (selectedItem) =>
-            {
-                await Shell.Current.Navigation.PushModalAsync(new ProductDetails(selectedItem));
-            });
-            CategoryTapCommand = new Command<CategoriesModel>(SelectCategory);
-            IconTapCommand = new Command(GoToCreateNewPostPage);
-        }
-
-        void PopulateData()
+        protected void PopulateData()
         {
             // Clone the original lists
             _OriginalLostItemDataList = new ObservableCollection<ProductListModel>(LostItemDataList);
             _OriginalFoundItemDataList = new ObservableCollection<ProductListModel>(FoundItemDataList);
         }
 
-        private async void SelectCategory(CategoriesModel obj)
+        protected async void SelectCategory(CategoriesModel obj)
         {
             if (obj.CategoryName == "Lost")
             {
@@ -72,12 +41,12 @@ namespace UTSLostAndFound.ViewModel
             }
         }
 
-        private async void GoToCreateNewPostPage()
+        protected async void GoToCreateNewPostPage()
         {
             await Shell.Current.Navigation.PushAsync(new CreateNewPostPage());
         }
 
-        private void SearchLostAndFoundItems(string searchText)
+        protected void SearchLostAndFoundItems(string searchText)
         {
             if (!string.IsNullOrWhiteSpace(searchText))
             {
@@ -111,6 +80,41 @@ namespace UTSLostAndFound.ViewModel
                     FoundItemDataList.Add(item);
                 }
             }
+        }
+    }
+
+    public class HomePageViewModel : BaseHomePageViewModel
+    {
+        public ICommand TapCommand { get; private set; }
+        public ICommand CategoryTapCommand { get; private set; }
+        public ICommand IconTapCommand { get; private set; }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                SearchLostAndFoundItems(_searchText);
+            }
+        }
+
+        public ObservableCollection<CategoriesModel> CategoriesDataList { get; } = new ObservableCollection<CategoriesModel>()
+        {
+            new CategoriesModel() { CategoryID = 1, CategoryName = "Lost", Icon = "\ufb36" },
+            new CategoriesModel() { CategoryID = 2, CategoryName = "Found", Icon = "\ufac0" }
+        };
+
+        public HomePageViewModel()
+        {
+            PopulateData();
+            TapCommand = new Command<ProductListModel>(async (selectedItem) =>
+            {
+                await Shell.Current.Navigation.PushModalAsync(new ProductDetails(selectedItem));
+            });
+            CategoryTapCommand = new Command<CategoriesModel>(SelectCategory);
+            IconTapCommand = new Command(GoToCreateNewPostPage);
         }
     }
 }

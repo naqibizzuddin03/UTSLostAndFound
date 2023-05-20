@@ -5,7 +5,14 @@ using System.Windows.Input;
 
 namespace UTSLostAndFound.ViewModel
 {
-    public class YourPostViewModel : BaseViewModel
+    //polymorphism is implemented here by utilizing the ISelectableItem interface
+    public interface ISelectableItem
+    {
+        ICommand TapCommand { get; }
+        ICommand DeleteCommand { get; }
+    }
+
+    public class YourPostViewModel : BaseViewModel, ISelectableItem
     {
         public ICommand TapCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
